@@ -10,7 +10,7 @@ for i in "${NAMES[@]}"
 do
     echo "Creating $i EC2 instance"
 
-    if [ [ $i == "mongodb" || $i == "mysql" ] ];
+    if [[ $i == "mongodb" || $i == "mysql" ]];
     then
         INSTANCE_TYPE="t3.medium"
     else
