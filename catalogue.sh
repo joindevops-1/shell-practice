@@ -33,35 +33,53 @@ curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>> $LOGFILE
  
 VALIDATE $? "setting npm source"
 
-yum install nodejs -y
+yum install nodejs -y &>> $LOGFILE
 
 VALIDATE $? "Installing NodeJS"
 
-useradd roboshop
+useradd roboshop &>> $LOGFILE
 
 mkdir /app
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
 
 VALIDATE $? "Downloading catalogue artifact"
 
 cd /app 
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOGFILE
 
-npm install 
+VALIDATE $? "unzipped catalogue artifact"
 
-cp /home/centos/shell-practice/catalogue.service /etc/systemd/system/catalogue.service
+npm install &>> $LOGFILE
 
-systemctl daemon-reload
+VALIDATE $? "Installed app dependencies"
 
-systemctl enable catalogue
+cp /home/centos/shell-practice/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 
-systemctl start catalogue
+VALIDATE $? "copied catalogue service"
 
-cp /home/centos/shell-practice/mongo.repo /etc/yum.repos.d/mongo.repo
+systemctl daemon-reload &>> $LOGFILE
 
-yum install mongodb-org-shell -y
+VALIDATE $? "system daemon reloaded"
+
+systemctl enable catalogue &>> $LOGFILE
+
+VALIDATE $? "Enabled catalogue"
+
+systemctl start catalogue &>> $LOGFILE
+
+VALIDATE $? "Started catalogue"
+
+cp /home/centos/shell-practice/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+
+VALIDATE $? "copied mongo repo"
+
+yum install mongodb-org-shell -y &>> $LOGFILE
+
+VALIDATE $? "Installed mongo client"
 
 
-mongo --host mongodb.joindevops.online </app/schema/catalogue.js
+mongo --host mongodb.joindevops.online </app/schema/catalogue.js &>> $LOGFILE
+
+VALIDATE $? "loaded category data"
