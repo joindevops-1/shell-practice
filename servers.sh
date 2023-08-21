@@ -21,7 +21,7 @@ do
     then
         PRIAVATE_IP=$(aws ec2 run-instances --image-id ami-03265a0778a880afb --instance-type $INSTANCE_TYPE --security-group-ids sg-0b34d8689bd628e3f --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]"| jq -r '.Instances[0].PublicIpAddress')
     else
-        PRIAVATE_IP=$(aws ec2 run-instances --image-id ami-0267717904601b796 --instance-type $INSTANCE_TYPE --security-group-ids sg-06b9f1182c28b0309 --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]"| jq -r '.Instances[0].PrivateIpAddress')
+        PRIAVATE_IP=$(aws ec2 run-instances --image-id ami-03265a0778a880afb --instance-type $INSTANCE_TYPE --security-group-ids sg-06b9f1182c28b0309 --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]"| jq -r '.Instances[0].PrivateIpAddress')
     fi
 
     aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch '{
