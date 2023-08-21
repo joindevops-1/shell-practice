@@ -10,14 +10,14 @@ for i in "${NAMES[@]}"
 do
     echo "Creating $i EC2 instance"
 
-    if [ $i == "mongodb" || $i == "mysql" ]
+    if [ [ $i == "mongodb" || $i == "mysql" ] ];
     then
         INSTANCE_TYPE="t3.medium"
     else
         INSTANCE_TYPE="t2.micro"
     fi
 
-    if [ $i == "web" ]
+    if [ $i == "web" ];
     then
         PRIAVATE_IP=$(aws ec2 run-instances --image-id ami-0267717904601b796 --instance-type $INSTANCE_TYPE --security-group-ids sg-06b9f1182c28b0309 --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]"| jq -r '.Instances[0].PublicIpAddress')
     else
