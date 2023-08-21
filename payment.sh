@@ -41,3 +41,13 @@ unzip /tmp/payment.zip
 
 pip3.6 install -r requirements.txt
 
+cp /home/centos/shell-practice/payment.service /etc/systemd/system/payment.service
+
+systemctl daemon-reload
+
+systemctl enable payment 
+
+systemctl start payment
+
+
+
