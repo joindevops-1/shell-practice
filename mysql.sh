@@ -26,3 +26,27 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N"
     fi
 }
+
+yum module disable mysql -y 
+
+VALIDATE $? "Disable existing MySQL Version"
+
+cp /home/centos/shell-practice/mysql.repo /etc/yum.repos.d/mysql.repo
+
+VALIDATE $? "copy mysql repo"
+
+yum install mysql-community-server -y
+
+VALIDATE $? "Install mysql server"
+
+systemctl enable mysqld
+
+VALIDATE $? "enable mysql"
+
+systemctl start mysqld
+
+VALIDATE $? "start mysql"
+
+mysql_secure_installation --set-root-pass RoboShop@1
+
+VALIDATE $? "set root password to mysql"
