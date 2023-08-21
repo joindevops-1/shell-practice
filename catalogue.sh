@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
 
 DATE=$(date +%F)
 LOGSDIR=/tmp
